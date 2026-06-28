@@ -1,0 +1,29 @@
+{# 企业网配置模板 #}
+{# 支持两种角色：gateway（三层汇聚）和 access（二层接入） #}
+{# 命令必须顶格写，不能有前导空格，否则华为设备会报 Unrecognized command #}
+{# 不能包含 system-view / quit / save，Netmiko 会自动管理 #}
+
+sysname {{ hostname }}
+
+vlan batch {{ vlans | join(' ') }}
+
+{% for ap in access_ports %}
+interface {{ ap.name }}
+port link-type access
+port default vlan {{ ap.vlan }}
+{% endfor %}
+
+{% for tp in trunk_ports %}
+interface {{ tp.name }}
+port link-type trunk
+port trunk allow-pass vlan {{ tp.vlans | join(' ') }}
+{% endfor %}
+
+{% if role == 'gateway' %}
+{% for gw in gateway_vlans %}
+interface Vlanif {{ gw.vlan }}
+ip address {{ gw.ip }} {{ gw.mask }}
+{% endfor %}
+{% endif %}
+
+stp mode {{ stp_mode }}
