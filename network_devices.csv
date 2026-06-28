@@ -1,4 +1,0 @@
-hostname,ip,username,password,role,vlans,access_ports,trunk_ports,gateway_vlans,stp_mode
-LSW1,16.0.0.11,python,Huawei@123,gateway,1|10|20,,Eth0/0/1|Eth0/0/2,10:192.168.10.254:255.255.255.0|20:192.168.20.254:255.255.255.0,rstp
-LSW2,16.0.0.22,python,Huawei@123,access,10|20,Eth0/0/2:10|Eth0/0/3:20,Eth0/0/1,,rstp
-LSW3,16.0.0.33,python,Huawei@123,access,10|20,Eth0/0/2:10|Eth0/0/3:20,Eth0/0/1,,rstp
